@@ -1,0 +1,357 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMYOJGsY+QAodf0sKR0pekU",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/samreenkauser/Rebounce-Applied-AI-and-Analytics-Codes/blob/main/Session%20-%206/S06_P2\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "df = pd.read_csv(\"session6_policy_data.csv\")"
+      ],
+      "metadata": {
+        "id": "rbghrorBeX01"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "EXERCISE 1 - A WHOLE ROW BY LABEL"
+      ],
+      "metadata": {
+        "id": "4QZSh9deeHc8"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(df.loc[0])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8UmCgke9eOlW",
+        "outputId": "0235eaed-d3df-494b-ac5f-d8d6afba5ba6"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "region             North\n",
+            "year                2021\n",
+            "employment_rate     92.3\n",
+            "budget_million      12.5\n",
+            "population         50000\n",
+            "Name: 0, dtype: object\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "EXERCISE 2 - ONE VALUE BY POSITION"
+      ],
+      "metadata": {
+        "id": "ep9U2ZVYe3Qe"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(df.iloc[0,2])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "L14ANAJHe6tM",
+        "outputId": "6a6eb74d-674d-4fe8-a164-a7ec8d8bd135"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "92.3\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "8_PdKxOPfFJ-"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "EXERCISE 3 - FILTER WITH ONE CONDITION"
+      ],
+      "metadata": {
+        "id": "I3AEwnSRfGWx"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "high = df[df[\"employment_rate\"] > 92]\n",
+        "print(high.shape[0])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "taG2YKZ9fL6f",
+        "outputId": "553c7d92-3fbb-487a-d2d1-372ea28ce488"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "28\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "EXERCISE 4 - TWO CONDITIONS"
+      ],
+      "metadata": {
+        "id": "_9GJ6xWYfkcV"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "sel = df[(df[\"employment_rate\"] > 92) & (df[\"year\"] >= 2027)]\n",
+        "sel = sel[[\"region\",\"year\",\"employment_rate\"]]"
+      ],
+      "metadata": {
+        "id": "xFm9jUFnfc0Q"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "EXERCISE 6 - FILL THE GAPS"
+      ],
+      "metadata": {
+        "id": "YE1We3tPgSaB"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df2 = df.copy()\n",
+        "df2[\"budget_million\"] = df2[\"budget_million\"].fillna(df2[\"budget_million\"].mean())\n",
+        "print(df2[\"budget_million\"].isna().sum())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "np3NjBqTgB0a",
+        "outputId": "7edc3e79-2585-47dd-8b55-aa17b3bb4e51"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "EXERCISE 7 - DROP THE DUPLICATE"
+      ],
+      "metadata": {
+        "id": "_zUjjE38hDPh"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(\"dupes:\",df.duplicated().sum())\n",
+        "clean = df.duplicated()\n",
+        "print(\"rows:\", clean.shape[0])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "GBgfqvIxg6mM",
+        "outputId": "4d3d11de-87c1-4ba9-a806-76b6d074c27d"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "dupes: 1\n",
+            "rows: 51\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "EXERCISE 8 - THE MESSY LABEL"
+      ],
+      "metadata": {
+        "id": "vhefDuchhmfd"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(df[\"region\"].unique())\n",
+        "df[\"region\"] = df[\"region\"].str.strip().str.title()\n",
+        "print(df[\"region\"].nunique())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "T7xH-PcrhqUu",
+        "outputId": "4baa58a9-8f83-4a97-c8ea-91f1990aa2c9"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['North' 'South' 'East' 'West' 'Central' 'north ']\n",
+            "5\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "EXERCISE 9 - FIX A TYPE"
+      ],
+      "metadata": {
+        "id": "D_LseJIriKYO"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df[\"emp_whole\"] = df[\"employment_rate\"].astype(int)\n",
+        "print(df[[\"employment_rate\",\"emp_whole\"]].head(3))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4mSfVUA4iDze",
+        "outputId": "9964193c-0e8b-43c8-e9cd-6a4824b7cc1d"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   employment_rate  emp_whole\n",
+            "0             92.3         92\n",
+            "1             88.7         88\n",
+            "2             91.2         91\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "  EXERCISE 10 - CLEAN,THEN FILTER"
+      ],
+      "metadata": {
+        "id": "Gj-ufgb-i1Wi"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "clean_df = df.drop_duplicates()\n",
+        "north = clean_df[clean_df[\"region\"] == \"North\"]\n",
+        "print(north.shape[0])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ykBKF6PFircQ",
+        "outputId": "a2b2d53e-adab-47a3-b4b3-fb82f01b8fbc"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "10\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "ANM2H_eqjR5c"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
